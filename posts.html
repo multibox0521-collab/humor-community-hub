@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인기글 모아보기 - 유머 커뮤니티 모음</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/posts.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1><i class="fas fa-fire"></i> 인기글 모아보기</h1>
+                    <p class="subtitle">모든 커뮤니티의 인기글을 한눈에</p>
+                </div>
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> 사이트 목록
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 필터 섹션 -->
+        <div class="filter-section">
+            <div class="search-section">
+                <input type="text" id="searchInput" placeholder="제목 검색..." class="search-input">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+
+            <div class="filter-group">
+                <label>시간대:</label>
+                <div class="filter-tabs time-tabs">
+                    <button class="filter-tab active" data-time="all">전체</button>
+                    <button class="filter-tab" data-time="1">1시간</button>
+                    <button class="filter-tab" data-time="3">3시간</button>
+                    <button class="filter-tab" data-time="6">6시간</button>
+                    <button class="filter-tab" data-time="12">12시간</button>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>커뮤니티:</label>
+                <div class="filter-tabs site-tabs">
+                    <button class="filter-tab active" data-site="all">전체</button>
+                    <button class="filter-tab" data-site="dcinside">디시인사이드</button>
+                    <button class="filter-tab" data-site="hahaha">웃긴대학</button>
+                    <button class="filter-tab" data-site="bobaedream">보배드림</button>
+                    <button class="filter-tab" data-site="ppomppu">뽐뿌</button>
+                    <button class="filter-tab" data-site="ruliweb">루리웹</button>
+                    <button class="filter-tab" data-site="clien">클리앙</button>
+                    <button class="filter-tab" data-site="todayhumor">오늘의유머</button>
+                    <button class="filter-tab" data-site="fmkorea">에펨코리아</button>
+                    <button class="filter-tab" data-site="mlbpark">MLB파크</button>
+                    <button class="filter-tab" data-site="dogdrip">개드립</button>
+                </div>
+            </div>
+            
+            <div class="filter-info">
+                <span id="postCount">0</span>개의 인기글
+            </div>
+        </div>
+
+        <!-- 게시글 목록 -->
+        <div id="postsContainer" class="posts-container">
+            <!-- 게시글들이 여기에 동적으로 추가됩니다 -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 유머 커뮤니티 모음. All rights reserved.</p>
+            <p class="disclaimer">게시글은 샘플 데이터이며, 클릭시 해당 커뮤니티의 베스트 페이지로 이동합니다.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/posts-data.js"></script>
+    <script src="js/posts.js"></script>
+</body>
+</html>

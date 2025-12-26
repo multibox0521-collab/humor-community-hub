@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유머 커뮤니티 통합 - 한눈에 보기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/all-in-one.css">
+</head>
+<body>
+    <!-- 상단 헤더 -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <h1><i class="fas fa-bolt"></i> 유머 커뮤니티 통합</h1>
+                <div class="header-actions">
+                    <button id="settingsBtn" class="icon-btn" title="설정">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 새 글 알림 -->
+            <div id="newPostsAlert" class="new-posts-alert" style="display: none;">
+                <i class="fas fa-bell"></i>
+                <span id="newPostsCount">0</span>개의 새 글이 있습니다
+                <button id="showNewPosts">보기</button>
+            </div>
+            
+            <!-- 통합 검색 -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="globalSearch" placeholder="모든 게시글에서 검색...">
+                <button id="clearSearch" class="clear-btn" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="container">
+        <!-- 탭 네비게이션 -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="realtime">
+                <i class="fas fa-bolt"></i> 실시간
+                <span class="tab-badge" id="realtimeBadge">0</span>
+            </button>
+            <button class="tab-btn" data-tab="humor">
+                <i class="fas fa-laugh"></i> 유머
+                <span class="tab-badge" id="humorBadge">100</span>
+            </button>
+            <button class="tab-btn" data-tab="entertainment">
+                <i class="fas fa-star"></i> 연예
+                <span class="tab-badge" id="entertainmentBadge">100</span>
+            </button>
+            <button class="tab-btn" data-tab="favorites">
+                <i class="fas fa-heart"></i> 즐겨찾기
+                <span class="tab-badge" id="favoritesBadge">0</span>
+            </button>
+        </div>
+
+        <!-- 필터 바 -->
+        <div class="filters-bar">
+            <div class="filters-left">
+                <div class="site-filters" id="siteFilters">
+                    <button class="filter-chip active" data-site="all">전체</button>
+                </div>
+            </div>
+            <div class="filters-right">
+                <select id="sortSelect" class="sort-select">
+                    <option value="time">최신순</option>
+                    <option value="views">조회수순</option>
+                    <option value="comments">댓글순</option>
+                </select>
+                <button id="filterSettingsBtn" class="filter-btn">
+                    <i class="fas fa-filter"></i> 필터 설정
+                </button>
+            </div>
+        </div>
+
+        <!-- 유머 전용 필터 (유머 탭에서만 표시) -->
+        <div class="humor-filters" id="humorFilters" style="display: none;">
+            <div class="time-filter">
+                <label><i class="fas fa-clock"></i> 기간:</label>
+                <div class="time-chips">
+                    <button class="time-chip active" data-hours="all">전체</button>
+                    <button class="time-chip" data-hours="1">1시간</button>
+                    <button class="time-chip" data-hours="3">3시간</button>
+                    <button class="time-chip" data-hours="6">6시간</button>
+                    <button class="time-chip" data-hours="12">12시간</button>
+                    <button class="time-chip" data-hours="24">24시간</button>
+                </div>
+            </div>
+            <div class="keyword-filter">
+                <label><i class="fas fa-search"></i> 키워드:</label>
+                <input type="text" id="humorKeyword" placeholder="예: 게임, 축구, 맛집...">
+                <button id="clearHumorKeyword" class="clear-keyword-btn" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 연예 전용 필터 (연예 탭에서만 표시) -->
+        <div class="entertainment-filters" id="entertainmentFilters" style="display: none;">
+            <div class="keyword-filter">
+                <label><i class="fas fa-search"></i> 키워드:</label>
+                <input type="text" id="entertainmentKeyword" placeholder="예: 드라마, 영화, 콘서트...">
+                <button id="clearEntertainmentKeyword" class="clear-keyword-btn" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 마지막 업데이트 시간 -->
+        <div class="update-info">
+            <i class="fas fa-clock"></i>
+            <span id="lastUpdate">마지막 업데이트: -</span>
+            <span class="separator">|</span>
+            <span id="nextUpdate">다음 업데이트: 5:00</span>
+        </div>
+
+        <!-- 탭 컨텐츠 -->
+        <div class="tabs-content">
+            <!-- 실시간 탭 -->
+            <div class="tab-content active" id="realtimeTab">
+                <div class="loading-spinner" id="realtimeLoading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>실시간 게시글을 불러오는 중...</p>
+                </div>
+                <div id="realtimePosts" class="posts-list"></div>
+                <div class="load-more-container" style="display: none;">
+                    <button id="loadMoreRealtime" class="load-more-btn">
+                        <i class="fas fa-chevron-down"></i> 더 보기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 유머 탭 -->
+            <div class="tab-content" id="humorTab">
+                <div id="humorPosts" class="posts-list"></div>
+                <div class="load-more-container">
+                    <button id="loadMoreHumor" class="load-more-btn">
+                        <i class="fas fa-chevron-down"></i> 더 보기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 연예 탭 -->
+            <div class="tab-content" id="entertainmentTab">
+                <div id="entertainmentPosts" class="posts-list"></div>
+                <div class="load-more-container">
+                    <button id="loadMoreEntertainment" class="load-more-btn">
+                        <i class="fas fa-chevron-down"></i> 더 보기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 즐겨찾기 탭 -->
+            <div class="tab-content" id="favoritesTab">
+                <div class="empty-state" id="emptyFavorites">
+                    <i class="fas fa-heart-broken"></i>
+                    <h3>즐겨찾기한 게시글이 없습니다</h3>
+                    <p>❤️ 버튼을 눌러 관심있는 글을 저장하세요</p>
+                </div>
+                <div id="favoritePosts" class="posts-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 설정 모달 -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> 설정</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-section">
+                    <h3><i class="fas fa-star"></i> 즐겨찾는 사이트</h3>
+                    <div id="favoriteSites" class="checkbox-group"></div>
+                </div>
+
+                <div class="setting-section">
+                    <h3><i class="fas fa-ban"></i> 차단 키워드</h3>
+                    <p class="setting-desc">아래 키워드가 포함된 게시글은 자동으로 숨겨집니다</p>
+                    <div class="keyword-input-group">
+                        <input type="text" id="blockKeywordInput" placeholder="차단할 키워드 입력">
+                        <button id="addBlockKeyword" class="btn-primary">추가</button>
+                    </div>
+                    <div id="blockKeywords" class="tags-list"></div>
+                </div>
+
+                <div class="setting-section">
+                    <h3><i class="fas fa-eye-slash"></i> 읽은 글</h3>
+                    <button id="clearReadPosts" class="btn-secondary">
+                        <i class="fas fa-trash"></i> 읽은 글 기록 모두 삭제
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveSettings" class="btn-primary">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 필터 설정 모달 -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2><i class="fas fa-filter"></i> 필터 설정</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-option">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="hideReadPosts" checked>
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">읽은 글 숨기기</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="showOnlyNew">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">새 글만 보기</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/all-in-one.js"></script>
+</body>
+</html>

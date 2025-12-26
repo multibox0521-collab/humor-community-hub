@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 크롤링 - 유머 커뮤니티 모음</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/posts.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1><i class="fas fa-bolt"></i> 실시간 크롤링</h1>
+                    <p class="subtitle">지금 이 순간의 실제 인기글을 확인하세요!</p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="posts.html" class="back-btn" style="background: #ff6b6b;">
+                        <i class="fas fa-fire"></i> 인기글
+                    </a>
+                    <a href="news.html" class="back-btn" style="background: #667eea;">
+                        <i class="fas fa-star"></i> 연예기사
+                    </a>
+                    <a href="index.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> 메인
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 로딩 상태 -->
+        <div id="loadingState" class="loading-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>실시간 게시글을 크롤링하는 중...</p>
+            <p style="font-size: 0.85rem; color: #999; margin-top: 10px;">최대 10초 소요</p>
+        </div>
+
+        <!-- 필터 섹션 -->
+        <div id="filterSection" class="filter-section" style="display: none;">
+            <div class="search-section">
+                <input type="text" id="searchInput" placeholder="제목 검색..." class="search-input">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+
+            <div class="filter-group">
+                <label>커뮤니티:</label>
+                <div class="filter-tabs site-tabs">
+                    <button class="filter-tab active" data-site="all">전체</button>
+                    <button class="filter-tab" data-site="clien">클리앙</button>
+                    <button class="filter-tab" data-site="ruliweb">루리웹</button>
+                    <button class="filter-tab" data-site="ppomppu">뽐뿌</button>
+                    <button class="filter-tab" data-site="dogdrip">개드립</button>
+                    <button class="filter-tab" data-site="todayhumor">오늘의유머</button>
+                </div>
+            </div>
+            
+            <div class="filter-info">
+                <span id="postCount">0</span>개의 실시간 게시글
+                <button id="refreshBtn" class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> 새로고침
+                </button>
+                <span id="updateTime" style="margin-left: 15px; color: #999; font-size: 0.85rem;"></span>
+            </div>
+        </div>
+
+        <!-- 게시글 목록 -->
+        <div id="postsContainer" class="posts-container">
+            <!-- 게시글들이 여기에 동적으로 추가됩니다 -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 유머 커뮤니티 모음. All rights reserved.</p>
+            <p class="disclaimer">✨ 실시간 크롤링으로 가져온 진짜 게시글입니다! 클릭하면 원본 게시글로 이동합니다.</p>
+        </div>
+    </footer>
+
+    <script src="js/live.js"></script>
+</body>
+</html>

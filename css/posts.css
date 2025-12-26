@@ -1,0 +1,488 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    margin-bottom: 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section h1 {
+    font-size: 1.8rem;
+    color: #ff6b6b;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-section h1 i {
+    color: #ff8e53;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.back-btn {
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Filter Section */
+.filter-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Search Section */
+.search-section {
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: inline-block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.time-tabs {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-tab {
+    padding: 6px 14px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    color: #666;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.filter-tab.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+}
+
+.filter-info {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.filter-info span {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* Posts Container */
+.posts-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 50px;
+}
+
+/* Post Card - 한줄 리스트 형태 */
+.post-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.post-card:nth-child(even) {
+    background: #fafafa;
+}
+
+.post-card:last-child {
+    border-bottom: none;
+}
+
+.post-card:hover {
+    background: #eef2ff !important;
+}
+
+/* 사이트 아이콘 */
+.site-icon {
+    flex-shrink: 0;
+    min-width: 50px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+    padding: 0 6px;
+}
+
+/* 제목 (메인) */
+.post-title {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.post-card:hover .post-title {
+    color: #667eea;
+}
+
+/* 통계 정보 */
+.post-stats {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.stat-item i {
+    color: #999;
+    font-size: 0.75rem;
+}
+
+/* 시간 */
+.post-time {
+    color: #999;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    min-width: 60px;
+    text-align: right;
+}
+
+/* 사이트명 뱃지 (숨김) */
+.site-badge {
+    display: none;
+}
+
+/* 썸네일 제거 */
+.post-thumbnail {
+    display: none;
+}
+
+.post-header {
+    display: none;
+}
+
+.post-content {
+    display: none;
+}
+
+.post-info {
+    display: none;
+}
+
+/* Site Color Classes */
+.post-card[data-site="dcinside"] {
+    border-left-color: #4a90e2;
+}
+
+.post-card[data-site="hahaha"] {
+    border-left-color: #f5a623;
+}
+
+.post-card[data-site="bobaedream"] {
+    border-left-color: #e74c3c;
+}
+
+.post-card[data-site="ppomppu"] {
+    border-left-color: #9b59b6;
+}
+
+.post-card[data-site="ruliweb"] {
+    border-left-color: #3498db;
+}
+
+.post-card[data-site="clien"] {
+    border-left-color: #34495e;
+}
+
+.post-card[data-site="todayhumor"] {
+    border-left-color: #e67e22;
+}
+
+.post-card[data-site="fmkorea"] {
+    border-left-color: #27ae60;
+}
+
+.post-card[data-site="mlbpark"] {
+    border-left-color: #c0392b;
+}
+
+.post-card[data-site="dogdrip"] {
+    border-left-color: #ff5722;
+}
+
+/* Footer */
+footer {
+    background: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 50px;
+    border-top: 1px solid #eee;
+}
+
+footer p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.disclaimer {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: #ddd;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 1rem;
+}
+
+/* Loading State */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.loading-state i {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.loading-state p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Refresh Button */
+.refresh-btn {
+    padding: 8px 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    background: #764ba2;
+    transform: translateY(-1px);
+}
+
+.refresh-btn i {
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .logo-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .back-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .filter-tabs {
+        gap: 6px;
+    }
+
+    .filter-tab {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+
+    .post-card {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .site-icon {
+        font-size: 1.1rem;
+        width: 24px;
+        height: 24px;
+    }
+
+    .post-title {
+        font-size: 0.85rem;
+    }
+
+    .post-stats {
+        gap: 8px;
+    }
+
+    .stat-item {
+        font-size: 0.75rem;
+    }
+
+    .post-time {
+        font-size: 0.75rem;
+        min-width: 50px;
+    }
+}
+
+/* Loading Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-card {
+    animation: fadeIn 0.5s ease-out;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유머 커뮤니티 모음</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-main">
+                <div>
+                    <h1><i class="fas fa-laugh-beam"></i> 유머 커뮤니티 모음</h1>
+                    <p class="subtitle">인기 유머 커뮤니티를 한눈에 확인하세요</p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="all-in-one.html" class="posts-link-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); animation: pulse 2s infinite; font-size: 1.1rem; padding: 15px 30px;">
+                        <i class="fas fa-rocket"></i> 통합 페이지 (추천!)
+                    </a>
+                    <a href="live.html" class="posts-link-btn" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <i class="fas fa-bolt"></i> 실시간 크롤링
+                    </a>
+                    <a href="posts.html" class="posts-link-btn">
+                        <i class="fas fa-fire"></i> 인기글 모아보기
+                    </a>
+                    <a href="news.html" class="posts-link-btn" style="background: linear-gradient(135deg, #ff6b6b, #feca57);">
+                        <i class="fas fa-star"></i> 연예기사
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="controls">
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">
+                    <i class="fas fa-th-large"></i> 그리드
+                </button>
+                <button class="view-btn" data-view="list">
+                    <i class="fas fa-list"></i> 리스트
+                </button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="커뮤니티 검색...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-home"></i>
+                <div>
+                    <h3 id="totalSites">0</h3>
+                    <p>전체 사이트</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-fire"></i>
+                <div>
+                    <h3 id="visitedSites">0</h3>
+                    <p>방문한 사이트</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <div>
+                    <h3 id="favoriteSites">0</h3>
+                    <p>즐겨찾기</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="sitesContainer" class="sites-grid">
+            <!-- 사이트 카드들이 여기에 동적으로 추가됩니다 -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 유머 커뮤니티 모음. All rights reserved.</p>
+            <p class="disclaimer">각 사이트는 독립적으로 운영되며, 본 사이트는 링크 모음 서비스입니다.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
