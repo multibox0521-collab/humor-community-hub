@@ -20,11 +20,20 @@ async function loadRealtimePosts() {
     const updateSpan = document.getElementById('realtimeUpdate');
     const countBadge = document.getElementById('realtimeCount');
     
+    console.log('🚀 실시간 크롤링 시작...');
+    
     try {
         const response = await fetch('/api/crawl');
-        const data = await response.json();
+        console.log('📡 API 응답 상태:', response.status, response.statusText);
         
-        if (data.success) {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('📦 받은 데이터:', data);
+        
+        if (data.success && data.posts && data.posts.length > 0) {
             realtimePosts = data.posts.slice(0, 10); // TOP 10만
             renderPosts(realtimePosts, 'realtimeList');
             
@@ -36,15 +45,23 @@ async function loadRealtimePosts() {
             
             // 개수 표시
             countBadge.textContent = realtimePosts.length;
+            
+            // 각 사이트별 크롤링 결과 로그
+            console.log('✅ 크롤링 성공!');
+            console.log('📊 사이트별 결과:', data.sites);
+            console.log(`📝 총 ${data.count}개 게시글 중 TOP ${realtimePosts.length}개 표시`);
         } else {
-            throw new Error('크롤링 실패');
+            throw new Error('크롤링된 게시글이 없습니다');
         }
     } catch (error) {
-        console.error('실시간 게시글 로드 실패:', error);
+        console.error('❌ 실시간 게시글 로드 실패:', error);
         container.innerHTML = `
             <div class="loading">
                 <i class="fas fa-exclamation-triangle"></i>
-                <p>게시글을 불러올 수 없습니다. 잠시 후 다시 시도됩니다.</p>
+                <p>게시글을 불러올 수 없습니다.</p>
+                <small style="color: #999; margin-top: 10px; display: block;">
+                    F12를 눌러 Console에서 자세한 에러를 확인하세요
+                </small>
             </div>
         `;
         
@@ -163,11 +180,29 @@ function generateSamplePosts(type, count) {
         const site = sites[i % sites.length];
         const title = titles[i % titles.length];
         
+        // 실제 게시글 URL 생성 (샘플 데이터이므로 게시판 메인 페이지로)
+        let postLink = site.url;
+        if (type === 'humor') {
+            // 각 사이트별 게시판 URL로 연결
+            if (site.name === '클리앙') postLink = 'https://www.clien.net/service/board/park';
+            else if (site.name === '루리웹') postLink = 'https://bbs.ruliweb.com/community/board/300143';
+            else if (site.name === '뽐뿌') postLink = 'https://www.ppomppu.co.kr/zboard/zboard.php?id=freeboard';
+            else if (site.name === '개드립') postLink = 'https://www.dogdrip.net/dogdrip';
+            else if (site.name === '오늘의유머') postLink = 'http://www.todayhumor.co.kr/board/list.php?table=bestofbest';
+            else if (site.name === '디시인사이드') postLink = 'https://gall.dcinside.com/board/lists/?id=dcbest';
+            else if (site.name === '웃긴대학') postLink = 'https://www.hahaha.kr/best';
+            else if (site.name === 'MLB파크') postLink = 'http://mlbpark.donga.com/mp/b.php?m=search&b=bullpen';
+            else if (site.name === '에펨코리아') postLink = 'https://www.fmkorea.com/best';
+        } else {
+            // 연예 사이트는 메인 페이지로
+            postLink = site.url;
+        }
+        
         return {
             siteName: site.name,
             siteColor: site.color,
             title: title,
-            link: site.url,
+            link: postLink,
             views: Math.floor(Math.random() * 50000) + 1000,
             comments: Math.floor(Math.random() * 500) + 10,
             timeAgo: Math.floor(Math.random() * 360) // 0~360분 전
