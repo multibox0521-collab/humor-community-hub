@@ -762,13 +762,28 @@ function generateSamplePosts(type, count) {
             timeOffset = Math.random() * 3600000 * 24;
         }
         
+        // 실제 게시판 URL로 연결 (샘플 데이터)
+        let postLink = site.url || '#';
+        if (type === 'humor' && site.url) {
+            // 각 사이트별 게시판 URL로 연결
+            if (site.name === '클리앙') postLink = 'https://www.clien.net/service/board/park';
+            else if (site.name === '루리웹') postLink = 'https://bbs.ruliweb.com/community/board/300143';
+            else if (site.name === '뽐뿌') postLink = 'https://www.ppomppu.co.kr/zboard/zboard.php?id=freeboard';
+            else if (site.name === '개드립') postLink = 'https://www.dogdrip.net/dogdrip';
+            else if (site.name === '오늘의유머') postLink = 'http://www.todayhumor.co.kr/board/list.php?table=bestofbest';
+            else if (site.name === '디시인사이드') postLink = 'https://gall.dcinside.com/board/lists/?id=dcbest';
+            else if (site.name === '웃긴대학') postLink = 'https://www.hahaha.kr/best';
+            else if (site.name === 'MLB파크') postLink = 'http://mlbpark.donga.com/mp/b.php?m=search&b=bullpen';
+            else if (site.name === '에펨코리아') postLink = 'https://www.fmkorea.com/best';
+        }
+        
         return {
             id: `${type}-${i}-${Date.now()}-${Math.random()}`,
             type,
             siteName: site.name,
             siteColor: site.color,
             title: title + ' ' + (i + 1),
-            link: site.url || '#',
+            link: postLink,
             views: Math.floor(Math.random() * 50000) + 100,
             comments: Math.floor(Math.random() * 500) + 5,
             timestamp: Date.now() - timeOffset,
