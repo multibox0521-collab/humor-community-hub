@@ -9,20 +9,14 @@ function setCORS(res) {
 function generateSampleData() {
   const sites = [
     { name: '클리앙', color: '#34495e', url: 'https://www.clien.net/service/board/park' },
-    { name: '루리웹', color: '#3498db', url: 'https://bbs.ruliweb.com/community/board/300143' },
     { name: '뽐뿌', color: '#9b59b6', url: 'https://www.ppomppu.co.kr/zboard/zboard.php?id=freeboard' },
     { name: '개드립', color: '#ff5722', url: 'https://www.dogdrip.net/dogdrip' },
     { name: '오늘의유머', color: '#e67e22', url: 'http://www.todayhumor.co.kr/board/list.php?table=bestofbest' },
-    { name: '디시인사이드', color: '#4a90e2', url: 'https://gall.dcinside.com/board/lists/?id=dcbest' },
-    { name: '웃긴대학', color: '#f5a623', url: 'https://www.hahaha.kr/best' },
-    { name: 'MLB파크', color: '#c0392b', url: 'http://mlbpark.donga.com/mp/b.php?b=bullpen' },
     { name: '에펨코리아', color: '#27ae60', url: 'https://www.fmkorea.com/best' },
     { name: '보배드림', color: '#ff6b6b', url: 'https://www.bobaedream.co.kr/cyber/CyberCommunity.php?gubun=K' },
-    { name: '82쿡', color: '#ff9ff3', url: 'https://www.82cook.com/entiz/read.php?bn=15' },
     { name: 'SLR클럽', color: '#54a0ff', url: 'https://www.slrclub.com/bbs/zboard.php?id=free' },
     { name: '인벤', color: '#ee5a6f', url: 'https://www.inven.co.kr/board/webzine/3371' },
-    { name: '엠팍', color: '#c44569', url: 'https://mlbpark.donga.com/mp/b.php?b=bullpen&m=list' },
-    { name: '더쿠', color: '#f368e0', url: 'https://theqoo.net/hot' }
+    { name: 'MLB파크', color: '#c0392b', url: 'http://mlbpark.donga.com/mp/b.php?b=bullpen' }
   ];
   
   const titles = [
@@ -55,34 +49,22 @@ function generateSampleData() {
       let postLink = site.url;
       if (site.name === '클리앙') {
         postLink = `https://www.clien.net/service/board/park/${postId}`;
-      } else if (site.name === '루리웹') {
-        postLink = `https://bbs.ruliweb.com/community/board/300143/${postId}`;
       } else if (site.name === '뽐뿌') {
         postLink = `https://www.ppomppu.co.kr/zboard/view.php?id=freeboard&no=${postId}`;
       } else if (site.name === '개드립') {
         postLink = `https://www.dogdrip.net/${postId}`;
       } else if (site.name === '오늘의유머') {
         postLink = `http://www.todayhumor.co.kr/board/view.php?table=bestofbest&no=${postId}`;
-      } else if (site.name === '디시인사이드') {
-        postLink = `https://gall.dcinside.com/board/view/?id=dcbest&no=${postId}`;
-      } else if (site.name === '웃긴대학') {
-        postLink = `https://www.hahaha.kr/bbs/${postId}`;
       } else if (site.name === 'MLB파크') {
         postLink = `http://mlbpark.donga.com/mp/b.php?m=view&b=bullpen&id=${postId}`;
       } else if (site.name === '에펨코리아') {
         postLink = `https://www.fmkorea.com/${postId}`;
       } else if (site.name === '보배드림') {
         postLink = `https://www.bobaedream.co.kr/view?code=cyber&No=${postId}`;
-      } else if (site.name === '82쿡') {
-        postLink = `https://www.82cook.com/entiz/read.php?num=${postId}&bn=15`;
       } else if (site.name === 'SLR클럽') {
         postLink = `https://www.slrclub.com/bbs/vx2.php?id=free&no=${postId}`;
       } else if (site.name === '인벤') {
         postLink = `https://www.inven.co.kr/board/webzine/3371/${postId}`;
-      } else if (site.name === '엠팍') {
-        postLink = `https://mlbpark.donga.com/mp/b.php?m=view&b=bullpen&id=${postId}`;
-      } else if (site.name === '더쿠') {
-        postLink = `https://theqoo.net/square/${postId}`;
       }
       
       posts.push({
@@ -121,23 +103,17 @@ export default async function handler(req, res) {
       posts: posts,
       sites: {
         clien: 15,
-        ruliweb: 15,
         ppomppu: 15,
         dogdrip: 15,
         todayhumor: 15,
-        dcinside: 15,
-        funnyuniv: 15,
-        mlbpark: 15,
         fmkorea: 15,
         bobae: 15,
-        cook82: 15,
         slrclub: 15,
         inven: 15,
-        mlbpark2: 15,
-        theqoo: 15
+        mlbpark: 15
       },
       timestamp: new Date().toISOString(),
-      note: '샘플 데이터입니다 (15개 사이트). 실제 크롤링은 /api/crawl을 사용하세요.'
+      note: '샘플 데이터입니다 (9개 사이트). 실제 크롤링은 /api/crawl을 사용하세요.'
     });
     
   } catch (error) {
