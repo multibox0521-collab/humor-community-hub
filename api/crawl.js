@@ -637,55 +637,41 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('🚀 크롤링 시작... (15개 사이트 전부!)');
+    console.log('🚀 크롤링 시작... (작동하는 9개 사이트만!)');
     
-    // 15개 사이트 병렬 크롤링
+    // 작동하는 9개 사이트만 병렬 크롤링
     const [
-      clien, ruliweb, ppomppu, dogdrip, todayhumor,
-      dcinside, funnyuniv, mlbpark, fmkorea,
-      bobae, cook82, slrclub, inven, mlbpark2, theqoo
+      clien, ppomppu, dogdrip, todayhumor,
+      fmkorea, bobae, slrclub, inven, mlbpark
     ] = await Promise.all([
       crawlClien(),
-      crawlRuliweb(),
       crawlPpomppu(),
       crawlDogdrip(),
       crawlTodayhumor(),
-      crawlDcinside(),
-      crawlFunnyUniv(),
-      crawlMlbpark(),
       crawlFmkorea(),
       crawlBobae(),
-      crawl82cook(),
       crawlSlrclub(),
       crawlInven(),
-      crawlMlbpark2(),
-      crawlTheqoo()
+      crawlMlbpark()
     ]);
     
     // 모든 게시글 합치기
     const allPosts = [
-      ...clien, ...ruliweb, ...ppomppu, ...dogdrip, ...todayhumor,
-      ...dcinside, ...funnyuniv, ...mlbpark, ...fmkorea,
-      ...bobae, ...cook82, ...slrclub, ...inven, ...mlbpark2, ...theqoo
+      ...clien, ...ppomppu, ...dogdrip, ...todayhumor,
+      ...fmkorea, ...bobae, ...slrclub, ...inven, ...mlbpark
     ];
     
     console.log(`✅ 크롤링 완료: 총 ${allPosts.length}개 게시글`);
     console.log(`📊 사이트별 현황:`);
     console.log(`  1. 클리앙: ${clien.length}개`);
-    console.log(`  2. 루리웹: ${ruliweb.length}개`);
-    console.log(`  3. 뽐뿌: ${ppomppu.length}개`);
-    console.log(`  4. 개드립: ${dogdrip.length}개`);
-    console.log(`  5. 오늘의유머: ${todayhumor.length}개`);
-    console.log(`  6. 디시인사이드: ${dcinside.length}개`);
-    console.log(`  7. 웃긴대학: ${funnyuniv.length}개`);
-    console.log(`  8. MLB파크: ${mlbpark.length}개`);
-    console.log(`  9. 에펨코리아: ${fmkorea.length}개`);
-    console.log(`  10. 보배드림: ${bobae.length}개`);
-    console.log(`  11. 82쿡: ${cook82.length}개`);
-    console.log(`  12. SLR클럽: ${slrclub.length}개`);
-    console.log(`  13. 인벤: ${inven.length}개`);
-    console.log(`  14. 엠팍: ${mlbpark2.length}개`);
-    console.log(`  15. 더쿠: ${theqoo.length}개`);
+    console.log(`  2. 뽐뿌: ${ppomppu.length}개`);
+    console.log(`  3. 개드립: ${dogdrip.length}개`);
+    console.log(`  4. 오늘의유머: ${todayhumor.length}개`);
+    console.log(`  5. 에펨코리아: ${fmkorea.length}개`);
+    console.log(`  6. 보배드림: ${bobae.length}개`);
+    console.log(`  7. SLR클럽: ${slrclub.length}개`);
+    console.log(`  8. 인벤: ${inven.length}개`);
+    console.log(`  9. MLB파크: ${mlbpark.length}개`);
     
     // 결과 반환
     res.status(200).json({
@@ -694,20 +680,14 @@ export default async function handler(req, res) {
       posts: allPosts,
       sites: {
         clien: clien.length,
-        ruliweb: ruliweb.length,
         ppomppu: ppomppu.length,
         dogdrip: dogdrip.length,
         todayhumor: todayhumor.length,
-        dcinside: dcinside.length,
-        funnyuniv: funnyuniv.length,
-        mlbpark: mlbpark.length,
         fmkorea: fmkorea.length,
         bobae: bobae.length,
-        cook82: cook82.length,
         slrclub: slrclub.length,
         inven: inven.length,
-        mlbpark2: mlbpark2.length,
-        theqoo: theqoo.length
+        mlbpark: mlbpark.length
       },
       timestamp: new Date().toISOString()
     });
