@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티베스트 - 이슈트리</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index-new.css">
+</head>
+<body>
+    <!-- 메인 래퍼 -->
+    <div class="main-wrapper">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="index.html" class="logo-link">
+                        <h1><i class="fas fa-tree"></i> 이슈트리</h1>
+                    </a>
+                    <p class="subtitle">커뮤니티베스트 - 조회수 많은 순</p>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> 홈
+                    </a>
+                    <a href="community.html" class="nav-link active">
+                        <i class="fas fa-fire"></i> 커뮤니티베스트
+                    </a>
+                    <a href="entertainment.html" class="nav-link">
+                        <i class="fas fa-star"></i> 연예뉴스베스트
+                    </a>
+                </nav>
+                <div class="header-right">
+                    <div class="update-badge">
+                        <i class="fas fa-sync-alt spinning"></i>
+                        <span id="lastUpdate">업데이트 중...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 컨텐츠 -->
+        <main class="content">
+            <!-- 커뮤니티베스트 전체 -->
+            <section class="post-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-fire"></i>
+                        <h2>커뮤니티베스트</h2>
+                        <span class="badge" id="communityCount">0</span>
+                    </div>
+                    <div class="section-meta">
+                        <span id="communityUpdate">로딩 중...</span>
+                    </div>
+                </div>
+                <div class="post-list" id="communityList">
+                    <!-- 로딩 스피너 -->
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>커뮤니티 베스트를 불러오는 중...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <p>🌳 이슈트리 | 실시간 커뮤니티 & 연예 이슈</p>
+            <p class="footer-links">
+                <a href="index.html">홈</a>
+                <span>|</span>
+                <a href="community.html">커뮤니티베스트</a>
+                <span>|</span>
+                <a href="entertainment.html">연예뉴스베스트</a>
+                <span>|</span>
+                <a href="all-in-one.html">전체보기</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="js/community.js"></script>
+</body>
+</html>
