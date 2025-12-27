@@ -1,29 +1,34 @@
 // ==================== 전역 변수 ====================
-let realtimePosts = [];
-let humorPosts = [];
+let communityPosts = [];
 let entertainmentPosts = [];
 
 // ==================== 초기화 ====================
 document.addEventListener('DOMContentLoaded', () => {
     // 데이터 로드
-    loadRealtimePosts();
-    loadHumorPosts();
+    loadCommunityPosts();
     loadEntertainmentPosts();
     
-    // 5분마다 실시간 게시글 자동 새로고침
-    setInterval(loadRealtimePosts, 5 * 60 * 1000);
+    // 네비게이션 메뉴 클릭 이벤트
+    setupNavigation();
+    
+    // 5분마다 자동 새로고침
+    setInterval(() => {
+        loadCommunityPosts();
+        loadEntertainmentPosts();
+    }, 5 * 60 * 1000);
 });
 
-// ==================== 실시간 크롤링 ====================
-async function loadRealtimePosts() {
-    const container = document.getElementById('realtimeList');
-    const updateSpan = document.getElementById('realtimeUpdate');
-    const countBadge = document.getElementById('realtimeCount');
+// ==================== 커뮤니티베스트 ====================
+async function loadCommunityPosts() {
+    const container = document.getElementById('communityList');
+    const updateSpan = document.getElementById('communityUpdate');
+    const countBadge = document.getElementById('communityCount');
     
-    console.log('🚀 실시간 크롤링 시작...');
+    console.log('🚀 커뮤니티베스트 크롤링 시작...');
     
     try {
-        const response = await fetch('/api/crawl');
+        // 임시로 샘플 데이터 사용 (크롤링 Timeout 해결 전까지)
+        const response = await fetch('/api/sample-data');
         console.log('📡 API 응답 상태:', response.status, response.statusText);
         
         if (!response.ok) {
@@ -34,8 +39,11 @@ async function loadRealtimePosts() {
         console.log('📦 받은 데이터:', data);
         
         if (data.success && data.posts && data.posts.length > 0) {
-            realtimePosts = data.posts.slice(0, 10); // TOP 10만
-            renderPosts(realtimePosts, 'realtimeList');
+            // 조회수 높은 순으로 정렬 (미리보기 5개만)
+            communityPosts = data.posts
+                .sort((a, b) => (b.views || 0) - (a.views || 0))
+                .slice(0, 5);
+            renderPosts(communityPosts, 'communityList');
             
             // 업데이트 시간 표시
             const now = new Date();
@@ -44,23 +52,23 @@ async function loadRealtimePosts() {
             document.getElementById('lastUpdate').textContent = `${timeStr} 업데이트됨`;
             
             // 개수 표시
-            countBadge.textContent = realtimePosts.length;
+            countBadge.textContent = communityPosts.length;
             
             // 각 사이트별 크롤링 결과 로그
-            console.log('✅ 크롤링 성공!');
+            console.log('✅ 커뮤니티베스트 크롤링 성공!');
             console.log('📊 사이트별 결과:', data.sites);
-            console.log(`📝 총 ${data.count}개 게시글 중 TOP ${realtimePosts.length}개 표시`);
+            console.log(`📝 총 ${data.count}개 게시글 중 TOP ${communityPosts.length}개 표시`);
         } else {
             throw new Error('크롤링된 게시글이 없습니다');
         }
     } catch (error) {
-        console.error('❌ 실시간 게시글 로드 실패:', error);
+        console.error('❌ 커뮤니티베스트 로드 실패:', error);
         container.innerHTML = `
             <div class="loading">
                 <i class="fas fa-exclamation-triangle"></i>
                 <p>게시글을 불러올 수 없습니다.</p>
                 <small style="color: #999; margin-top: 10px; display: block;">
-                    F12를 눌러 Console에서 자세한 에러를 확인하세요
+                    잠시 후 다시 시도됩니다
                 </small>
             </div>
         `;
@@ -71,16 +79,52 @@ async function loadRealtimePosts() {
     }
 }
 
-// ==================== 유머 베스트 ====================
-function loadHumorPosts() {
-    humorPosts = generateSamplePosts('humor', 10);
-    renderPosts(humorPosts, 'humorList');
-}
-
-// ==================== 연예 속보 ====================
-function loadEntertainmentPosts() {
-    entertainmentPosts = generateSamplePosts('entertainment', 10);
-    renderPosts(entertainmentPosts, 'entertainmentList');
+// ==================== 연예뉴스베스트 ====================
+async function loadEntertainmentPosts() {
+    const container = document.getElementById('entertainmentList');
+    const updateSpan = document.getElementById('entertainmentUpdate');
+    const countBadge = document.getElementById('entertainmentCount');
+    
+    console.log('🚀 연예뉴스베스트 크롤링 시작...');
+    
+    try {
+        // 임시로 샘플 데이터 사용 (크롤링 Timeout 해결 전까지)
+        const response = await fetch('/api/sample-data');
+        const data = await response.json();
+        
+        if (data.success && data.posts.length > 0) {
+            // 댓글 많은 순으로 정렬 (미리보기 5개만)
+            entertainmentPosts = data.posts
+                .sort((a, b) => (b.comments || 0) - (a.comments || 0))
+                .slice(0, 5);
+            renderPosts(entertainmentPosts, 'entertainmentList');
+            
+            // 업데이트 시간 표시
+            const now = new Date();
+            const timeStr = now.getHours() + ':' + now.getMinutes().toString().padStart(2, '0');
+            updateSpan.textContent = `마지막 업데이트: ${timeStr}`;
+            
+            // 개수 표시
+            countBadge.textContent = entertainmentPosts.length;
+            
+            console.log('✅ 연예뉴스베스트 크롤링 성공!');
+        } else {
+            throw new Error('크롤링 실패');
+        }
+    } catch (error) {
+        console.error('❌ 연예뉴스베스트 로드 실패:', error);
+        container.innerHTML = `
+            <div class="loading">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>게시글을 불러올 수 없습니다.</p>
+                <small style="color: #999; margin-top: 10px; display: block;">
+                    잠시 후 다시 시도됩니다
+                </small>
+            </div>
+        `;
+        
+        updateSpan.textContent = '로딩 실패';
+    }
 }
 
 // ==================== 게시글 렌더링 ====================
@@ -118,8 +162,14 @@ function renderPosts(posts, containerId) {
 // ==================== 게시글 열기 ====================
 function openPost(link) {
     if (link && link !== '#') {
-        window.open(link, '_blank');
+        window.location.href = link; // 같은 창에서 열기
     }
+}
+
+// ==================== 네비게이션 ====================
+function setupNavigation() {
+    // 네비게이션은 이제 다른 페이지로 이동하므로 특별한 처리 불필요
+    // 메뉴 링크는 일반 링크로 작동
 }
 
 // ==================== 샘플 데이터 생성 ====================
