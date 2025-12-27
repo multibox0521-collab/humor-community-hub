@@ -142,7 +142,7 @@ function renderPosts(posts, containerId) {
     }
     
     container.innerHTML = posts.map((post, index) => `
-        <div class="post-item" onclick="openPost('${post.link}')">
+        <div class="post-item" style="cursor: pointer;" data-link="${escapeHtml(post.link)}">
             <div class="post-number">${index + 1}</div>
             <div class="post-site" style="background: ${post.siteColor}20; color: ${post.siteColor};">
                 ${post.siteName}
@@ -157,6 +157,16 @@ function renderPosts(posts, containerId) {
             </div>
         </div>
     `).join('');
+    
+    // 클릭 이벤트 추가
+    container.querySelectorAll('.post-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const link = item.getAttribute('data-link');
+            if (link && link !== '#') {
+                window.location.href = link;
+            }
+        });
+    });
 }
 
 // ==================== 게시글 열기 ====================
