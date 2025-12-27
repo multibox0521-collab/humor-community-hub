@@ -27,7 +27,7 @@ async function loadCommunityPosts() {
     console.log('🚀 커뮤니티베스트 크롤링 시작...');
     
     try {
-        const response = await fetch('/api/crawl-mixed');
+        const response = await fetch('/api/crawl');
         console.log('📡 API 응답 상태:', response.status, response.statusText);
         
         if (!response.ok) {
@@ -87,7 +87,7 @@ async function loadEntertainmentPosts() {
     console.log('🚀 연예뉴스베스트 크롤링 시작...');
     
     try {
-        const response = await fetch('/api/crawl-mixed');
+        const response = await fetch('/api/crawl');
         const data = await response.json();
         
         if (data.success && data.posts.length > 0) {
