@@ -379,6 +379,252 @@ async function crawlFmkorea() {
   }
 }
 
+// 보배드림 크롤링
+async function crawlBobae() {
+  try {
+    const { data } = await axios.get('https://www.bobaedream.co.kr/cyber/CyberCommunity.php?gubun=K', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 15000
+    });
+    
+    const $ = cheerio.load(data);
+    const posts = [];
+    
+    $('tr.pl10').each((i, el) => {
+      if (i >= 15) return false;
+      
+      const title = $(el).find('.pl14 a').text().trim();
+      const href = $(el).find('.pl14 a').attr('href');
+      const link = href ? 'https://www.bobaedream.co.kr' + href : '';
+      
+      if (title && link && !link.includes('undefined')) {
+        posts.push({
+          site: 'bobae',
+          siteName: '보배드림',
+          siteColor: '#ff6b6b',
+          title: title,
+          link: link,
+          views: 0,
+          comments: 0,
+          timeAgo: '방금 전'
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('보배드림 크롤링 실패:', error.message);
+    return [];
+  }
+}
+
+// 82쿡 크롤링
+async function crawl82cook() {
+  try {
+    const { data } = await axios.get('https://www.82cook.com/entiz/read.php?bn=15&num=&m=B', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 15000
+    });
+    
+    const $ = cheerio.load(data);
+    const posts = [];
+    
+    $('table.bd_list tr').each((i, el) => {
+      if (i >= 15) return false;
+      
+      const title = $(el).find('.title a').text().trim();
+      const href = $(el).find('.title a').attr('href');
+      const link = href ? 'https://www.82cook.com/entiz/' + href : '';
+      
+      if (title && link && !link.includes('undefined')) {
+        posts.push({
+          site: '82cook',
+          siteName: '82쿡',
+          siteColor: '#ff9ff3',
+          title: title,
+          link: link,
+          views: 0,
+          comments: 0,
+          timeAgo: '방금 전'
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('82쿡 크롤링 실패:', error.message);
+    return [];
+  }
+}
+
+// SLR클럽 크롤링
+async function crawlSlrclub() {
+  try {
+    const { data } = await axios.get('https://www.slrclub.com/bbs/zboard.php?id=free', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 15000
+    });
+    
+    const $ = cheerio.load(data);
+    const posts = [];
+    
+    $('table.list_table tbody tr').each((i, el) => {
+      if (i >= 15) return false;
+      
+      const title = $(el).find('.sbj a').text().trim();
+      const href = $(el).find('.sbj a').attr('href');
+      const link = href ? 'https://www.slrclub.com/bbs/' + href : '';
+      
+      if (title && link && !link.includes('undefined')) {
+        posts.push({
+          site: 'slrclub',
+          siteName: 'SLR클럽',
+          siteColor: '#54a0ff',
+          title: title,
+          link: link,
+          views: 0,
+          comments: 0,
+          timeAgo: '방금 전'
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('SLR클럽 크롤링 실패:', error.message);
+    return [];
+  }
+}
+
+// 인벤 크롤링
+async function crawlInven() {
+  try {
+    const { data } = await axios.get('https://www.inven.co.kr/board/webzine/3371', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 15000
+    });
+    
+    const $ = cheerio.load(data);
+    const posts = [];
+    
+    $('.board-list tbody tr').each((i, el) => {
+      if (i >= 15) return false;
+      
+      const title = $(el).find('.subject a').text().trim();
+      const href = $(el).find('.subject a').attr('href');
+      const link = href ? 'https://www.inven.co.kr' + href : '';
+      
+      if (title && link && !link.includes('undefined')) {
+        posts.push({
+          site: 'inven',
+          siteName: '인벤',
+          siteColor: '#ee5a6f',
+          title: title,
+          link: link,
+          views: 0,
+          comments: 0,
+          timeAgo: '방금 전'
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('인벤 크롤링 실패:', error.message);
+    return [];
+  }
+}
+
+// 엠팍 크롤링
+async function crawlMlbpark2() {
+  try {
+    const { data } = await axios.get('https://mlbpark.donga.com/mp/b.php?b=bullpen&m=list', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 15000
+    });
+    
+    const $ = cheerio.load(data);
+    const posts = [];
+    
+    $('.tbl-list tbody tr').each((i, el) => {
+      if (i >= 15) return false;
+      
+      const title = $(el).find('.tit a').text().trim();
+      const href = $(el).find('.tit a').attr('href');
+      const link = href ? 'https://mlbpark.donga.com' + href : '';
+      
+      if (title && link && !link.includes('undefined')) {
+        posts.push({
+          site: 'mlbpark2',
+          siteName: '엠팍',
+          siteColor: '#c44569',
+          title: title,
+          link: link,
+          views: 0,
+          comments: 0,
+          timeAgo: '방금 전'
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('엠팍 크롤링 실패:', error.message);
+    return [];
+  }
+}
+
+// 더쿠 크롤링
+async function crawlTheqoo() {
+  try {
+    const { data } = await axios.get('https://theqoo.net/hot', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 15000
+    });
+    
+    const $ = cheerio.load(data);
+    const posts = [];
+    
+    $('.list-post .post-item').each((i, el) => {
+      if (i >= 15) return false;
+      
+      const title = $(el).find('.title a').text().trim();
+      const href = $(el).find('.title a').attr('href');
+      const link = href ? 'https://theqoo.net' + href : '';
+      
+      if (title && link && !link.includes('undefined')) {
+        posts.push({
+          site: 'theqoo',
+          siteName: '더쿠',
+          siteColor: '#f368e0',
+          title: title,
+          link: link,
+          views: 0,
+          comments: 0,
+          timeAgo: '방금 전'
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('더쿠 크롤링 실패:', error.message);
+    return [];
+  }
+}
+
 // 메인 핸들러
 export default async function handler(req, res) {
   // CORS 설정
@@ -391,26 +637,55 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('크롤링 시작... (5개 사이트만)');
+    console.log('🚀 크롤링 시작... (15개 사이트 전부!)');
     
-    // 작동하는 5개 사이트만 병렬 크롤링
-    const [clien, ruliweb, ppomppu, dogdrip, todayhumor] = await Promise.all([
+    // 15개 사이트 병렬 크롤링
+    const [
+      clien, ruliweb, ppomppu, dogdrip, todayhumor,
+      dcinside, funnyuniv, mlbpark, fmkorea,
+      bobae, cook82, slrclub, inven, mlbpark2, theqoo
+    ] = await Promise.all([
       crawlClien(),
       crawlRuliweb(),
       crawlPpomppu(),
       crawlDogdrip(),
-      crawlTodayhumor()
+      crawlTodayhumor(),
+      crawlDcinside(),
+      crawlFunnyUniv(),
+      crawlMlbpark(),
+      crawlFmkorea(),
+      crawlBobae(),
+      crawl82cook(),
+      crawlSlrclub(),
+      crawlInven(),
+      crawlMlbpark2(),
+      crawlTheqoo()
     ]);
     
     // 모든 게시글 합치기
-    const allPosts = [...clien, ...ruliweb, ...ppomppu, ...dogdrip, ...todayhumor];
+    const allPosts = [
+      ...clien, ...ruliweb, ...ppomppu, ...dogdrip, ...todayhumor,
+      ...dcinside, ...funnyuniv, ...mlbpark, ...fmkorea,
+      ...bobae, ...cook82, ...slrclub, ...inven, ...mlbpark2, ...theqoo
+    ];
     
-    console.log(`크롤링 완료: 총 ${allPosts.length}개 게시글`);
-    console.log(`- 클리앙: ${clien.length}개`);
-    console.log(`- 루리웹: ${ruliweb.length}개`);
-    console.log(`- 뽐뿌: ${ppomppu.length}개`);
-    console.log(`- 개드립: ${dogdrip.length}개`);
-    console.log(`- 오늘의유머: ${todayhumor.length}개`);
+    console.log(`✅ 크롤링 완료: 총 ${allPosts.length}개 게시글`);
+    console.log(`📊 사이트별 현황:`);
+    console.log(`  1. 클리앙: ${clien.length}개`);
+    console.log(`  2. 루리웹: ${ruliweb.length}개`);
+    console.log(`  3. 뽐뿌: ${ppomppu.length}개`);
+    console.log(`  4. 개드립: ${dogdrip.length}개`);
+    console.log(`  5. 오늘의유머: ${todayhumor.length}개`);
+    console.log(`  6. 디시인사이드: ${dcinside.length}개`);
+    console.log(`  7. 웃긴대학: ${funnyuniv.length}개`);
+    console.log(`  8. MLB파크: ${mlbpark.length}개`);
+    console.log(`  9. 에펨코리아: ${fmkorea.length}개`);
+    console.log(`  10. 보배드림: ${bobae.length}개`);
+    console.log(`  11. 82쿡: ${cook82.length}개`);
+    console.log(`  12. SLR클럽: ${slrclub.length}개`);
+    console.log(`  13. 인벤: ${inven.length}개`);
+    console.log(`  14. 엠팍: ${mlbpark2.length}개`);
+    console.log(`  15. 더쿠: ${theqoo.length}개`);
     
     // 결과 반환
     res.status(200).json({
@@ -422,13 +697,23 @@ export default async function handler(req, res) {
         ruliweb: ruliweb.length,
         ppomppu: ppomppu.length,
         dogdrip: dogdrip.length,
-        todayhumor: todayhumor.length
+        todayhumor: todayhumor.length,
+        dcinside: dcinside.length,
+        funnyuniv: funnyuniv.length,
+        mlbpark: mlbpark.length,
+        fmkorea: fmkorea.length,
+        bobae: bobae.length,
+        cook82: cook82.length,
+        slrclub: slrclub.length,
+        inven: inven.length,
+        mlbpark2: mlbpark2.length,
+        theqoo: theqoo.length
       },
       timestamp: new Date().toISOString()
     });
     
   } catch (error) {
-    console.error('크롤링 오류:', error);
+    console.error('❌ 크롤링 오류:', error);
     res.status(500).json({
       success: false,
       error: error.message
