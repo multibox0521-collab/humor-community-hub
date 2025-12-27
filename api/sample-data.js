@@ -39,12 +39,28 @@ function generateSampleData() {
   sites.forEach(site => {
     for (let i = 0; i < 15; i++) {
       const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+      const postId = Math.floor(Math.random() * 10000000);
+      
+      // 사이트별 게시글 URL 형식
+      let postLink = site.url;
+      if (site.name === '클리앙') {
+        postLink = `https://www.clien.net/service/board/park/${postId}`;
+      } else if (site.name === '루리웹') {
+        postLink = `https://bbs.ruliweb.com/community/board/300143/${postId}`;
+      } else if (site.name === '뽐뿌') {
+        postLink = `https://www.ppomppu.co.kr/zboard/view.php?id=freeboard&no=${postId}`;
+      } else if (site.name === '개드립') {
+        postLink = `https://www.dogdrip.net/${postId}`;
+      } else if (site.name === '오늘의유머') {
+        postLink = `http://www.todayhumor.co.kr/board/view.php?table=bestofbest&no=${postId}`;
+      }
+      
       posts.push({
         site: site.name.toLowerCase(),
         siteName: site.name,
         siteColor: site.color,
         title: `${randomTitle} ${i + 1}`,
-        link: site.url, // 실제 게시판 URL
+        link: postLink, // 게시글 개별 URL
         views: Math.floor(Math.random() * 50000) + 1000,
         comments: Math.floor(Math.random() * 500) + 10,
         timeAgo: '방금 전'
