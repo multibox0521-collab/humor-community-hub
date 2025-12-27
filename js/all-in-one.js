@@ -428,7 +428,7 @@ function attachPostEventListeners() {
             if (e.target.closest('.action-btn')) return;
             
             markAsRead(id);
-            window.open(link, '_blank');
+            window.location.href = link; // 같은 창에서 열기
         });
         
         // 즐겨찾기
