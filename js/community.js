@@ -18,7 +18,7 @@ async function loadCommunityPosts() {
     console.log('🚀 커뮤니티베스트 전체 크롤링 시작...');
     
     try {
-        const response = await fetch('/api/crawl');
+        const response = await fetch('/api/sample-data');
         console.log('📡 API 응답 상태:', response.status, response.statusText);
         
         if (!response.ok) {
