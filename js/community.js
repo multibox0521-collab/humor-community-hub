@@ -18,8 +18,7 @@ async function loadCommunityPosts() {
     console.log('🚀 커뮤니티베스트 전체 크롤링 시작...');
     
     try {
-        // 임시로 샘플 데이터 사용 (크롤링 Timeout 해결 전까지)
-        const response = await fetch('/api/sample-data');
+        const response = await fetch('/api/crawl');
         console.log('📡 API 응답 상태:', response.status, response.statusText);
         
         if (!response.ok) {
