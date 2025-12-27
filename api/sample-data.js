@@ -8,11 +8,11 @@ function setCORS(res) {
 // 샘플 데이터 생성
 function generateSampleData() {
   const sites = [
-    { name: '클리앙', color: '#34495e' },
-    { name: '루리웹', color: '#3498db' },
-    { name: '뽐뿌', color: '#9b59b6' },
-    { name: '개드립', color: '#ff5722' },
-    { name: '오늘의유머', color: '#e67e22' }
+    { name: '클리앙', color: '#34495e', url: 'https://www.clien.net/service/board/park' },
+    { name: '루리웹', color: '#3498db', url: 'https://bbs.ruliweb.com/community/board/300143' },
+    { name: '뽐뿌', color: '#9b59b6', url: 'https://www.ppomppu.co.kr/zboard/zboard.php?id=freeboard' },
+    { name: '개드립', color: '#ff5722', url: 'https://www.dogdrip.net/dogdrip' },
+    { name: '오늘의유머', color: '#e67e22', url: 'http://www.todayhumor.co.kr/board/list.php?table=bestofbest' }
   ];
   
   const titles = [
@@ -44,7 +44,7 @@ function generateSampleData() {
         siteName: site.name,
         siteColor: site.color,
         title: `${randomTitle} ${i + 1}`,
-        link: `https://www.${site.name}.net/post/${Math.floor(Math.random() * 10000)}`,
+        link: site.url, // 실제 게시판 URL
         views: Math.floor(Math.random() * 50000) + 1000,
         comments: Math.floor(Math.random() * 500) + 10,
         timeAgo: '방금 전'
