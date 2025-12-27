@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>유머 커뮤니티 통합 - 실시간 인기글</title>
+    <title>이슈트리 - 실시간 커뮤니티 이슈</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/index-new.css">
@@ -33,79 +33,74 @@
         <header class="header">
             <div class="header-content">
                 <div class="header-left">
-                    <h1><i class="fas fa-bolt"></i> 유머 커뮤니티 통합</h1>
-                    <p class="subtitle">실시간 업데이트 인기 게시글</p>
+                    <a href="index.html" class="logo-link">
+                        <h1><i class="fas fa-tree"></i> 이슈트리</h1>
+                    </a>
+                    <p class="subtitle">실시간 커뮤니티 & 연예 이슈</p>
                 </div>
+                <nav class="header-nav">
+                    <a href="community.html" class="nav-link">
+                        <i class="fas fa-fire"></i> 커뮤니티베스트
+                    </a>
+                    <a href="entertainment.html" class="nav-link">
+                        <i class="fas fa-star"></i> 연예뉴스베스트
+                    </a>
+                </nav>
                 <div class="header-right">
                     <div class="update-badge">
                         <i class="fas fa-sync-alt spinning"></i>
                         <span id="lastUpdate">업데이트 중...</span>
                     </div>
-                    <a href="all-in-one.html" class="main-btn">
-                        <i class="fas fa-th-large"></i> 전체보기
-                    </a>
                 </div>
             </div>
         </header>
 
         <!-- 메인 컨텐츠 -->
         <main class="content">
-            <!-- 실시간 인기글 섹션 -->
-            <section class="post-section">
-                <div class="section-header">
-                    <div class="section-title">
-                        <i class="fas fa-bolt"></i>
-                        <h2>실시간 인기글</h2>
-                        <span class="badge" id="realtimeCount">0</span>
-                    </div>
-                    <div class="section-meta">
-                        <span id="realtimeUpdate">로딩 중...</span>
-                    </div>
-                </div>
-                <div class="post-list" id="realtimeList">
-                    <!-- 로딩 스피너 -->
-                    <div class="loading">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <p>실시간 게시글을 불러오는 중...</p>
-                    </div>
-                </div>
-                <a href="all-in-one.html?tab=realtime" class="view-more">
-                    전체보기 <i class="fas fa-chevron-right"></i>
-                </a>
-            </section>
-
-            <!-- 유머 베스트 섹션 -->
-            <section class="post-section">
+            <!-- 커뮤니티베스트 미리보기 -->
+            <section class="post-section" id="community">
                 <div class="section-header">
                     <div class="section-title">
                         <i class="fas fa-fire"></i>
-                        <h2>유머 베스트</h2>
-                        <span class="badge">10</span>
+                        <h2>커뮤니티베스트</h2>
+                        <span class="badge" id="communityCount">5</span>
                     </div>
                     <div class="section-meta">
-                        <span>인기 유머 게시글</span>
+                        <span id="communityUpdate">로딩 중...</span>
                     </div>
                 </div>
-                <div class="post-list" id="humorList"></div>
-                <a href="all-in-one.html?tab=humor" class="view-more">
+                <div class="post-list" id="communityList">
+                    <!-- 로딩 스피너 -->
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>커뮤니티 베스트를 불러오는 중...</p>
+                    </div>
+                </div>
+                <a href="community.html" class="view-more-btn">
                     전체보기 <i class="fas fa-chevron-right"></i>
                 </a>
             </section>
 
-            <!-- 연예 속보 섹션 -->
-            <section class="post-section">
+            <!-- 연예뉴스베스트 미리보기 -->
+            <section class="post-section" id="entertainment">
                 <div class="section-header">
                     <div class="section-title">
                         <i class="fas fa-star"></i>
-                        <h2>연예 속보</h2>
-                        <span class="badge">10</span>
+                        <h2>연예뉴스베스트</h2>
+                        <span class="badge" id="entertainmentCount">5</span>
                     </div>
                     <div class="section-meta">
-                        <span>최신 연예 뉴스</span>
+                        <span id="entertainmentUpdate">로딩 중...</span>
                     </div>
                 </div>
-                <div class="post-list" id="entertainmentList"></div>
-                <a href="all-in-one.html?tab=entertainment" class="view-more">
+                <div class="post-list" id="entertainmentList">
+                    <!-- 로딩 스피너 -->
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>연예 뉴스를 불러오는 중...</p>
+                    </div>
+                </div>
+                <a href="entertainment.html" class="view-more-btn">
                     전체보기 <i class="fas fa-chevron-right"></i>
                 </a>
             </section>
@@ -113,13 +108,15 @@
 
         <!-- 푸터 -->
         <footer class="footer">
-            <p>유머 커뮤니티 통합 | 실시간으로 업데이트되는 인기 게시글</p>
+            <p>🌳 이슈트리 | 실시간 커뮤니티 & 연예 이슈</p>
             <p class="footer-links">
+                <a href="index.html">홈</a>
+                <span>|</span>
                 <a href="all-in-one.html">전체보기</a>
                 <span>|</span>
-                <a href="posts.html">샘플 페이지</a>
+                <a href="#community">커뮤니티베스트</a>
                 <span>|</span>
-                <a href="news.html">연예 뉴스</a>
+                <a href="#entertainment">연예뉴스베스트</a>
             </p>
         </footer>
     </div>
