@@ -14,7 +14,8 @@ async function crawlClien() {
     const { data } = await axios.get('https://www.clien.net/service/board/park?&od=T31&po=0', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
+      },
+      timeout: 15000 // 15초 제한
     });
     
     const $ = cheerio.load(data);
@@ -55,7 +56,8 @@ async function crawlRuliweb() {
     const { data } = await axios.get('https://bbs.ruliweb.com/community/board/300143', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
+      },
+      timeout: 15000 // 15초 제한
     });
     
     const $ = cheerio.load(data);
@@ -96,7 +98,8 @@ async function crawlPpomppu() {
     const { data } = await axios.get('https://www.ppomppu.co.kr/zboard/zboard.php?id=freeboard', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
+      },
+      timeout: 15000 // 15초 제한
     });
     
     const $ = cheerio.load(data);
@@ -136,7 +139,8 @@ async function crawlDogdrip() {
     const { data } = await axios.get('https://www.dogdrip.net/dogdrip', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
+      },
+      timeout: 15000 // 15초 제한
     });
     
     const $ = cheerio.load(data);
@@ -175,7 +179,8 @@ async function crawlTodayhumor() {
     const { data } = await axios.get('http://www.todayhumor.co.kr/board/list.php?table=bestofbest', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
+      },
+      timeout: 15000 // 15초 제한
     });
     
     const $ = cheerio.load(data);
@@ -385,23 +390,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('크롤링 시작...');
+    console.log('크롤링 시작... (5개 사이트만)');
     
-    // 모든 사이트 병렬 크롤링 (추가 사이트 포함)
-    const [clien, ruliweb, ppomppu, dogdrip, todayhumor, dcinside, funnyuniv, mlbpark, fmkorea] = await Promise.all([
+    // 작동하는 5개 사이트만 병렬 크롤링
+    const [clien, ruliweb, ppomppu, dogdrip, todayhumor] = await Promise.all([
       crawlClien(),
       crawlRuliweb(),
       crawlPpomppu(),
       crawlDogdrip(),
-      crawlTodayhumor(),
-      crawlDcinside(),
-      crawlFunnyUniv(),
-      crawlMlbpark(),
-      crawlFmkorea()
+      crawlTodayhumor()
     ]);
     
     // 모든 게시글 합치기
-    const allPosts = [...clien, ...ruliweb, ...ppomppu, ...dogdrip, ...todayhumor, ...dcinside, ...funnyuniv, ...mlbpark, ...fmkorea];
+    const allPosts = [...clien, ...ruliweb, ...ppomppu, ...dogdrip, ...todayhumor];
     
     console.log(`크롤링 완료: 총 ${allPosts.length}개 게시글`);
     console.log(`- 클리앙: ${clien.length}개`);
@@ -409,10 +410,6 @@ export default async function handler(req, res) {
     console.log(`- 뽐뿌: ${ppomppu.length}개`);
     console.log(`- 개드립: ${dogdrip.length}개`);
     console.log(`- 오늘의유머: ${todayhumor.length}개`);
-    console.log(`- 디시인사이드: ${dcinside.length}개`);
-    console.log(`- 웃긴대학: ${funnyuniv.length}개`);
-    console.log(`- MLB파크: ${mlbpark.length}개`);
-    console.log(`- 에펨코리아: ${fmkorea.length}개`);
     
     // 결과 반환
     res.status(200).json({
@@ -424,11 +421,7 @@ export default async function handler(req, res) {
         ruliweb: ruliweb.length,
         ppomppu: ppomppu.length,
         dogdrip: dogdrip.length,
-        todayhumor: todayhumor.length,
-        dcinside: dcinside.length,
-        funnyuniv: funnyuniv.length,
-        mlbpark: mlbpark.length,
-        fmkorea: fmkorea.length
+        todayhumor: todayhumor.length
       },
       timestamp: new Date().toISOString()
     });
