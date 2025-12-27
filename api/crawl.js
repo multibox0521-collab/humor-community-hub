@@ -25,11 +25,12 @@ async function crawlClien() {
       if (i >= 15) return false;
       
       const title = $(el).find('.subject_fixed').text().trim();
-      const link = 'https://www.clien.net' + $(el).find('.list_subject a').attr('href');
+      const href = $(el).find('.list_subject a').attr('href');
+      const link = href ? 'https://www.clien.net' + href : '';
       const views = $(el).find('.list_hit').text().trim();
       const comments = $(el).find('.list_reply').text().trim();
       
-      if (title && link) {
+      if (title && link && link !== 'https://www.clien.net') {
         posts.push({
           site: 'clien',
           siteName: '클리앙',
